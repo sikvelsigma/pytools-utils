@@ -3,7 +3,7 @@ from typing import Callable, Tuple, Dict, Any
 import time
 
 
-def timing(printout: bool = False) -> Callable:
+def time_exec(printout: bool = False) -> Callable:
     """Decorator factory, adds 'last_call_elapsed' and 'total_time' attributes to a fucntion
 
     Args:

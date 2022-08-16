@@ -1,11 +1,13 @@
 # -----------------------------------------
 # ------------Immutable properties---------
 # -----------------------------------------
-from typing import Any
+from typing import Any, Type
 class PropertyImmutable(Exception):
     """Cannot mutate an already set property"""
     pass
 
+def _cls_name(obj: Type[object]) -> str:
+    return obj.__class__.__name__
 class ImmutableProperties():
     """Immutable properties in class (except with '__')"""
 
@@ -18,7 +20,7 @@ class ImmutableProperties():
             except:
                 current_value = None
             if name in self.__dict__ and current_value is not None:
-                raise PropertyImmutable(f"Property '{name}' is immutable")
+                raise PropertyImmutable(f"Property '{name}' in '{_cls_name(self)}' is immutable")
         self.__dict__[name] = value
 
 if __name__ == "__main__":
