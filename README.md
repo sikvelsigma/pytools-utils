@@ -47,10 +47,12 @@ class Test(PostInit):
     def __postinit__(self):
         print("this prints after init is done")
         print(self.a)
+
+t = Test()
 ```
 
 ### <kbd>require</kbd>
-Contains `RequireAttrs`, `RequireDictParser` classes. Inhereting from `RequireAttrs` forces you to specify what attributes must be set at the end of `__init__` call by defining `require` tuple. Inhereting from `RequireDictParser` let's you parse a `dict` (or `json` file) which must containg all attributes specified in `require` tuple and some combination of parameters for each tuple in `require_any` tuple. All remaning attributes not in the `dict` but present in `require_any` msut be set in `set_args` method
+Contains `RequireAttrs`, `RequireDictParser` classes. Inhereting from `RequireAttrs` forces you to specify what attributes must be set at the end of `__init__` call by defining `require` tuple. Inhereting from `RequireDictParser` let's you parse a `dict` (or `json` file) which must containg all attributes specified in `require` tuple and some combination of parameters for each tuple in `require_any` tuple. All remaning attributes not in the `dict` but present in `require_any` msut be set in `set_args` method. `declare_args` must be used for type annotations and inital values (mainly for setting optional args as `None`)
 ```python
 from pyuseful.classtools.require import RequireAttrs
 
@@ -60,6 +62,8 @@ class Test(RequireAttrs):
     def __init__(self):
         self.a = 1
         self.b = 2
+
+t = Test()
 ```
 
 ```python
@@ -74,8 +78,9 @@ class Test(RequireDictParser):
         # either combination must be in a dict or json file: 'q' & 'w', 'q' & 'e', 'w' & 'e'      
         (("q", "w", "e"), 2)    
     )
-    def set_args(self):
-        # typing the data for ease of use and for IDE
+
+    def declare_args(self):
+        # typing the attributes and init values
         self.a: float
         self.b: float
 
@@ -85,11 +90,12 @@ class Test(RequireDictParser):
         self.q: float = None
         self.w: float = None
         self.e: float = None
-        
+
+    def set_args(self):
         # all remaining unset attributes must be set here
         if self.x:
             self.y = self.x + 1
-        elif
+        else:
             self.x = self.y - 1
 
         if self.q is None:
@@ -103,9 +109,9 @@ class Test(RequireDictParser):
 # t = Test.from_json(<path>)
 
 data = dict(
-    a=1,
+    a=1.1,
     b=2,
-    x=10,
+    x="10.1",
     q=100,
     w=200,
 )
@@ -125,6 +131,8 @@ msg = MessageThread(print_func=print)
 
 # will print "some_print: hello"
 msg.print("hello")
+# wait for all messages to print
+msg.join()
 ```
 ---
 ## decorators
@@ -134,7 +142,7 @@ Contains `require`, `timing`
 ### <kbd>require</kbd>
 Contains `require_condition` decorator for use in classes.
 ```python
-from src.pyuseful.decorators.require import require_condition
+from pyuseful.decorators.require import require_condition
 
 class Test:
     # this style definition checks if the bool() of var is True
@@ -168,7 +176,7 @@ class Test:
 
 t = Test()
 # t.inc_a()   # bool(ready) == False -> will raise an error 
-t.ready()    
+t.set_ready()    
 t.inc_a()     # b>=a == True -> a=1, b=2
 # t.inc_b()   # a>=b == False -> will raise an error
 t.inc_a()     # b>=a == True -> a=2, b=2
@@ -178,11 +186,11 @@ t.inc_b()     # a>=b == True -> a=2, b=3
 ### <kbd>timing</kbd>
 Contains `time_exec` decorator. Adds `last_call_elapsed`, `total_time` attributes to a function.
 ```python
-from src.pyuseful.decorators.timing import time_exec
+from pyuseful.decorators.timing import time_exec
 
 # 'printout=True' prints 'last_call_elapsed' to console on each call
 @time_exec(printout=True)
-def func(self):
+def func():
     sum = 0
     for i in range(100_000):
         sum += i

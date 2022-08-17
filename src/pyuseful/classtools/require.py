@@ -62,6 +62,11 @@ class RequireDictParser(RequireAttrs):
         pass
 
     @abstractmethod
+    def declare_args(self) -> None:
+        """Set up args with annotations or init values"""
+        pass
+
+    @abstractmethod
     def set_args(self) -> None:
         """Set all missing properties from 'require_any' here"""
         pass
@@ -77,6 +82,8 @@ class RequireDictParser(RequireAttrs):
             raise AttributeError(
                 f"'import_data' in {_cls_name(self)} must be a dict")
 
+        self.declare_args()
+
         if self.require_any:
             for keys, amount in self.require_any:
                 self._check_require_set(keys, amount, import_data)
@@ -89,8 +96,17 @@ class RequireDictParser(RequireAttrs):
                 raise PropertyMissing(f"'{_cls_name(self)}': Missing property {key} in 'import_data'")
 
         for key, item in import_data.items():
-            self.__dict__[key] = item
-
+            if isinstance(item, str):
+                try:
+                    self.__dict__[key] = int(item)
+                except ValueError:
+                    try:
+                        self.__dict__[key] = float(item)
+                    except ValueError:
+                        self.__dict__[key] = item
+            else:
+                self.__dict__[key] = item
+                
         self.set_args()
 
     def __postinit__(self):
