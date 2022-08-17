@@ -8,6 +8,7 @@ class PropertyImmutable(Exception):
 
 def _cls_name(obj: Type[object]) -> str:
     return obj.__class__.__name__
+    
 class ImmutableProperties():
     """Immutable properties in class (except with '__')"""
 

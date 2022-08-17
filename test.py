@@ -1,7 +1,11 @@
+from pyuseful.classtools.immutable import ImmutableProperties
+from pyuseful.classtools.message import MessageThread
+from pyuseful.classtools.require import RequireAttrs, RequireDictParser
+from pyuseful.classtools.postinit import PostInit
+from pyuseful.decorators.require import require_condition
+from pyuseful.decorators.timing import time_exec
 
-from pyuseful.classtools import ImmutableProperties, PostInit, RequireAttrs, RequireDictParser
-from pyuseful.decorators import require_condition, time_exec
-from pyuseful.classtools import MessageThread
+
 
 import time
 
