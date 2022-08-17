@@ -1,9 +1,9 @@
-from pyuseful.classtools.immutable import ImmutableProperties
-from pyuseful.classtools.message import MessageThread
-from pyuseful.classtools.require import RequireAttrs, RequireDictParser
-from pyuseful.classtools.postinit import PostInit
-from pyuseful.decorators.require import require_condition
-from pyuseful.decorators.timing import time_exec
+from src.pyuseful.classtools.immutable import ImmutableProperties
+from src.pyuseful.classtools.message import MessageThread
+from src.pyuseful.classtools.require import RequireAttrs, RequireDictParser
+from src.pyuseful.classtools.postinit import PostInit
+from src.pyuseful.decorators.require import require_condition
+from src.pyuseful.decorators.timing import time_exec
 
 
 
@@ -14,8 +14,8 @@ class Test(ImmutableProperties, PostInit):
     def __init__(self):
         print("init")
 
-    def __postinit__(self):
-        print("postinit test")
+    # def __postinit__(self):
+    #     print("postinit test")
 
 
 
@@ -26,9 +26,9 @@ class Test2(Test):
         self.__a = 100
         self._b = 100
 
-    def __postinit__(self):
-        print("postinit test2")
-        super().__postinit__()
+    # def __postinit__(self):
+    #     print("postinit test2")
+    #     super().__postinit__()
 
     @require_a_cond
     @time_exec(printout=True)
@@ -57,19 +57,9 @@ if __name__ == "__main__":
         # z=6
     )
     
-    t = Test3(td)
+    t = Test2()
     
     # with open("test.json", 'w', encoding='utf-8') as f:
     #     json.dump(td, f, ensure_ascii=False, indent=4)
 
-    print(t.a, t.b, t.c, t.x, t.y, t.z)
 
-    ms = MessageThread(print_func=print)
-    time.sleep(1)
-    ms.print("test1", "sfsdf", 'sdfsdf', sep=";")
-    ms.print("test1")
-    ms.print("test1")
-    time.sleep(1)
-    ms.join()
-    ms.print("dfgdg")
-    ms.join()

@@ -10,6 +10,7 @@ class PostInitMeta(ABCMeta):
         obj = type.__call__(cls, *args, **kwargs)
         obj.__postinit__()
         return obj
+    
 
 class PostInit(metaclass=PostInitMeta):
     """Base class with __postinit__ method"""
