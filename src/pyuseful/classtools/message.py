@@ -1,7 +1,7 @@
 
 from queue import Queue
 from threading import Thread
-from typing import Callable, Any, Type
+from typing import Callable, Any, Type, Optional
 
 def _cls_name(obj: Type[object]) -> str:
     return obj.__class__.__name__
@@ -14,9 +14,9 @@ class MessageThread:
             raise RuntimeError(f"'{_cls_name(self)}' messaging thread is not alive")
         self.__msg_queue.put((args, kwargs)) 
 
-    def __init__(self, print_func: Callable[..., Any] = print) -> None:
+    def __init__(self, print_func: Optional[Callable[..., Any]] = None) -> None:
         self.__msg_queue = Queue()
-        self.__print = print_func
+        self.__print = print_func if print_func is not None else print
         self.__msg_handler = Thread(target=self.__msg_ouput, daemon=True)
         self.__msg_handler.start()
         
