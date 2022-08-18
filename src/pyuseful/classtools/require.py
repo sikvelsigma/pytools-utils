@@ -45,7 +45,13 @@ class RequireAttrs(PostInit):
 # -----------------------------------------
 # -----------------------------------------
 class RequireDictParser(RequireAttrs):
-    """Parse dict with required parameters"""
+    """Parse dict with required parameters, requires declaration 
+    of 'require' and 'require_any' class attributes. Class attribute 
+    'infer_numbers' sets if number strings will be convreted to numbers
+    """
+
+    infer_numbers = True
+    
     @property
     @abstractclassmethod
     def require_any(self) -> Optional[Tuple[Tuple[Tuple[str, ...], int], ...]]:
@@ -63,7 +69,9 @@ class RequireDictParser(RequireAttrs):
 
     @abstractmethod
     def declare_args(self) -> None:
-        """Set up args with annotations or init values"""
+        """ Typing the attributes or setting init values as 'None',
+        will raise an error on trying to set a different value
+        """
         pass
 
     @abstractmethod
@@ -82,7 +90,9 @@ class RequireDictParser(RequireAttrs):
             raise AttributeError(
                 f"'import_data' in {_cls_name(self)} must be a dict")
 
+        self._declaring = True
         self.declare_args()
+        self._declaring = False
 
         if self.require_any:
             for keys, amount in self.require_any:
@@ -96,7 +106,7 @@ class RequireDictParser(RequireAttrs):
                 raise PropertyMissing(f"'{_cls_name(self)}': Missing property {key} in 'import_data'")
 
         for key, item in import_data.items():
-            if isinstance(item, str):
+            if isinstance(item, str) and type(self).infer_numbers:
                 try:
                     self.__dict__[key] = int(item)
                 except ValueError:
@@ -106,8 +116,19 @@ class RequireDictParser(RequireAttrs):
                         self.__dict__[key] = item
             else:
                 self.__dict__[key] = item
-                
+
         self.set_args()
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        try:
+            declaring = self._declaring
+        except AttributeError:
+            declaring = False
+
+        if declaring and (value is not None) and name != "_declaring":
+            raise AttributeError(f"'{_cls_name(self)}': can only set values to 'None' in `declare_args` ({name}={value})")
+            
+        super().__setattr__(name, value)
 
     def __postinit__(self):
         """Check if every required arg is set"""

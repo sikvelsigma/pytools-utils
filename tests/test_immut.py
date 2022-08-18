@@ -24,7 +24,8 @@ class Test(ImmutableProperties):
         self.__i += 1
 
 t = Test()
+t.inc() # this will NOT raise an error
+t.c = 1 # this will NOT raise an error
+
 # t.a = 0 # this will raise an error
 # t.fun() # this will also raise an error
-t.inc() # this will NOT raise an error
-t.c = 1

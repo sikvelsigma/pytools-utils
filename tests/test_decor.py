@@ -11,25 +11,23 @@ from src.pyuseful.decorators.thread import repeat_timer
 
 import time
 
-@repeat_timer(1, get_nones=False, get_false=False)
-def fun(msg):
-    print(msg)
-    return len(msg)
+# @repeat_timer(1, get_nones=False, get_false=False)
+# def fun(msg):
+#     print(msg)
+#     return 1
 
+# a = fun("hi")
+# time.sleep(2)
+# print(a.get())
+# time.sleep(2)
+# print(a.get())
+# a.stop()
 
-a = fun("hi")
-b = fun("hello")
+# can be called only 2 times
+@limit(2)
+def fun():
+    print("hi")
 
-time.sleep(2)
-
-print(a.get())
-print(b.get())
-
-time.sleep(2)
-
-print(a.get())
-
-a.stop()
-print(a._thread.is_alive())
-print(b._thread.is_alive())
-print("done")
+fun()  # 1st call is allowed
+fun()  # 2nd call is allowed
+fun()  # 3rd call, this will raise an error

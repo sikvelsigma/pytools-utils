@@ -8,7 +8,7 @@ authors = [
   { name="sikvelsigma", email="sikvelsigma@yandex.ru" },
 ]
 description = "A collection of useful tools"
-readme = "README.md"
+readme = "README_PYPI.md"
 license = { file="LICENSE" }
 requires-python = ">=3.9"
 classifiers = [
