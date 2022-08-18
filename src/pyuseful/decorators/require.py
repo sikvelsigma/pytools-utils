@@ -2,12 +2,8 @@
 # ------------Require decorator factory----
 # -----------------------------------------
 from functools import wraps
-from inspect import Attribute
 from typing import Callable, Type, Tuple, Dict, Any, Optional
 
-class ConditionUnsatisfied(Exception):
-    """Condition is not satisfied"""
-    pass
 
 def _mangle_args(self: Type[object], inp: str) -> str:
     """Mangle names starting with 'self.__'
@@ -41,8 +37,13 @@ def require_condition(var: Optional[str] = None, cond: Optional[str] = None, msg
         msg: str, display on error
     """
     if var is None and cond is None:
-        raise AttributeError("at least one argument must be provided: 'var', 'cond'")
-        
+        raise ValueError("at least one argument must be provided: 'var', 'cond'")
+
+    for x in (var, cond, msg):
+        if x is not None and not isinstance(x, str):
+            raise ValueError(f"argument '{x}' must be str")
+
+
     cond_str = cond if cond is not None else ""
     var_str = f"self.{var}" if var is not None else ""
     msg = msg if msg else f"'{var_str}{cond_str}' must evaluate to 'True'"
@@ -61,7 +62,7 @@ def require_condition(var: Optional[str] = None, cond: Optional[str] = None, msg
 
             condition = eval(f"{value}{cond}") if cond is not None else bool(value)
             if not condition:
-                raise ConditionUnsatisfied(msg)
+                raise RuntimeError(msg)
                 
             return func(self, *args, **kwargs)
 
@@ -71,6 +72,63 @@ def require_condition(var: Optional[str] = None, cond: Optional[str] = None, msg
 
 # -----------------------------------------
 # -----------------------------------------
+
+def once(_func=None, *, mode="cashed"):
+    """Decorator to allow a function to only be called once or
+     always return result of the 1st call
+    
+    Args:
+        mode: str, 'cashed' - always return 1st result, 
+        'error' - raise an error if called a 2nd time
+    """
+    if mode not in ("cashed", "error"):
+        raise ValueError("'mode' argument can only be: 'cashed' or 'error'")
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if not wrapper._done:
+                wrapper._cashed_result = func(*args, **kwargs)
+                wrapper._done = True
+            elif mode == "error":
+                raise RuntimeError(f"'{func.__name__}' can only be called once")
+            return wrapper._cashed_result
+
+        wrapper._cashed_result = None   
+        wrapper._done = False
+        return wrapper
+
+    if _func is None:
+        return decorator
+    else:
+        return decorator(_func)
+
+# -----------------------------------------
+# -----------------------------------------
+
+def limit(max_calls):
+    """Decorator to allow a function to only be called 
+    'max_calls' amount of times
+    
+    Args:
+        max_calls: int, how many time a function can be called 
+    """
+    if not isinstance(max_calls, int):
+        raise ValueError("'max_calls' must be int")
+    if max_calls < 1:
+        raise ValueError("'max_calls' must be greater than 0")
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            wrapper._calls += 1
+            if wrapper._calls > max_calls:
+                raise RuntimeError(f"'{func.__name__}' can only be called {max_calls} times")
+            return func(*args, **kwargs)
+
+        wrapper._calls = 0   
+        return wrapper
+
+    return decorator
 
 if __name__ == "__main__":
     pass
