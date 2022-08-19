@@ -1,3 +1,3 @@
-from . import classtools, decorators
+from . import classtools, decorators, filetools
 
-__all__ = [classtools, decorators]
+__all__ = [classtools, decorators, filetools]

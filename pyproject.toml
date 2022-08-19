@@ -3,12 +3,12 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "pyuseful"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="sikvelsigma", email="sikvelsigma@yandex.ru" },
 ]
 description = "A collection of useful tools"
-readme = "README_PYPI.md"
+readme = "README.md"
 license = { file="LICENSE" }
 requires-python = ">=3.9"
 classifiers = [

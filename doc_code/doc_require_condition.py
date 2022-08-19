@@ -1,13 +1,8 @@
 import sys
-sys.path.insert(0, '../')
+sys.path.insert(0, 'src/')
 
-from src.pyuseful.classtools.immutable import ImmutableProperties
-from src.pyuseful.classtools.message import MessageThread
-from src.pyuseful.classtools.require import RequireAttrs, RequireDictParser
-from src.pyuseful.classtools.postinit import PostInit
-from src.pyuseful.decorators.require import require_condition
-from src.pyuseful.decorators.timing import time_exec
-
+# splice@:req_cond
+from pyuseful.decorators.require import require_condition
 
 class Test:
     # this style definition checks if the bool() of var is True
@@ -46,3 +41,4 @@ t.inc_a()     # b>=a == True -> a=1, b=2
 # t.inc_b()   # a>=b == False -> will raise an error
 t.inc_a()     # b>=a == True -> a=2, b=2
 t.inc_b()     # a>=b == True -> a=2, b=3
+# /splice@:req_cond

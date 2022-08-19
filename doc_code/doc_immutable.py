@@ -1,12 +1,8 @@
 import sys
-sys.path.insert(0, '../')
+sys.path.insert(0, 'src/')
 
-from src.pyuseful.classtools.immutable import ImmutableProperties
-from src.pyuseful.classtools.message import MessageThread
-from src.pyuseful.classtools.require import RequireAttrs, RequireDictParser
-from src.pyuseful.classtools.postinit import PostInit
-from src.pyuseful.decorators.require import require_condition
-from src.pyuseful.decorators.timing import time_exec
+# splice@:immut
+from pyuseful.classtools.immutable import ImmutableProperties
 
 class Test(ImmutableProperties):
     # change all attributes once their value is not None will raise an error
@@ -29,3 +25,4 @@ t.c = 1 # this will NOT raise an error
 
 # t.a = 0 # this will raise an error
 # t.fun() # this will also raise an error
+# /splice@:immut

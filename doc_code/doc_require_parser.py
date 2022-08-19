@@ -1,12 +1,8 @@
 import sys
-sys.path.insert(0, '../')
+sys.path.insert(0, 'src/')
 
-from src.pyuseful.classtools.immutable import ImmutableProperties
-from src.pyuseful.classtools.message import MessageThread
-from src.pyuseful.classtools.require import RequireAttrs, RequireDictParser
-from src.pyuseful.classtools.postinit import PostInit
-from src.pyuseful.decorators.require import require_condition
-from src.pyuseful.decorators.timing import time_exec
+# splice@:req_parser
+from pyuseful.classtools.require import RequireDictParser
 
 class Test(RequireDictParser):
     # keys 'a' and 'b' must in a dict or json file
@@ -62,3 +58,4 @@ data = dict(
     w=200,
 )
 t = Test(data)
+# /splice@:req_parser
