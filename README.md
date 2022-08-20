@@ -1,4 +1,4 @@
-# pyusful
+# pyuseful
 
 The package contains a collection of tools I find useful. Check out [wiki](https://github.com/sikvelsigma/pytools-utils/wiki) page for more detail and examples.
 # Install
