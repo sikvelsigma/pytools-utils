@@ -1,7 +1,7 @@
 from queue import Queue
 from threading import Thread, Event, Lock
 from functools import wraps
-
+from typing import List
 
 class _RepeaterResult:
 
@@ -26,7 +26,8 @@ class _RepeaterResult:
                 self._queue.put(result)
             self._wait(self._timer)
 
-    def get(self):
+    def get(self) -> List:
+        """Get accumulated results from queue"""
         res = []
         self._lock.acquire()
         while not self._queue.empty():
@@ -36,6 +37,7 @@ class _RepeaterResult:
         return res
 
     def stop(self):
+        """Stop timer"""
         self._running = False
         self._thread.join()
 
@@ -44,6 +46,7 @@ def repeat_timer(timer, get_nones=False, get_false=True):
     """Launches a thread that will execute a function each 'timer' sec, 
     to get accumulated results call 'get' method, to stop timer call 'stop' method 
     of returned value
+
     Args:
         timer: float, delay between calls
         get_nones: bool, put 'None' values in result

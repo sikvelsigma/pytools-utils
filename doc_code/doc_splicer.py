@@ -5,9 +5,15 @@ sys.path.insert(0, 'src/')
 from pyuseful.filetools.splicer import Splicer
 
 splicer = Splicer()
-#  find tag block in a file
+
+# find tag block in a file
 splicer.parse_segments("./doc_code/splicer_source.md")
+
+# add a new segment manually
+splicer.add_segment_manual("seg2", "manually added text2")
+
 # make new file from with insert tags swapped with found block
 splicer.splice_into("./doc_code/splicer_test.md", "./doc_code/splicer_test_res.md")
+
 # can parse and splice multiple files, use 'parse_batch()' and 'splice_batch'
 # /splice@:splicer

@@ -13,8 +13,8 @@ def fun(msg):
 
 a = fun("hi")
 time.sleep(2)
-print(a.get())
+print(a.get())  # will print [1, 1]
 time.sleep(2)
-print(a.get())
+print(a.get())  # will print [1, 1]
 a.stop()
 # /splice@:thread_timer
