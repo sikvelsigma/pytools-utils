@@ -5,7 +5,7 @@ The package contains a collection of tools I find useful. Check out [wiki](https
 Requires python 3.9
 
 ```
-py -m pip install pyuseful
+pip install pyuseful
 ```
 
 # General info
@@ -18,26 +18,26 @@ Consists of several sub-packages:
     - immutable
         - <kbd>class</kbd> `ImmutableProperties`
 
-                Makes class propreties immutable
+            Makes class propreties immutable
     ---
     - message
         - <kbd>class</kbd> `MessageThread`
 
-                Creates a separate thread which prints messeges in queue
+            Creates a separate thread which prints messeges in queue
     ---
     - postint
         - <kbd>class</kbd> `PostInit`
 
-                Adds a call to `__postinit__` method after init is complete
+            Adds a call to `__postinit__` method after init is complete
     ---
     - require
         - <kbd>class</kbd> `RequireAttrs`
 
-                Adds attribute `require` which forces you to set listed attributes by the end of init
+            Adds attribute `require` which forces you to set listed attributes by the end of init
 
         - <kbd>class</kbd> `RequireDictParser`
 
-                Parses `dict` or `json` file into a class and make attributes from keys. Adds attribute `require` and `require_any` which force you to set listed attributes by the end of init
+            Parses `dict` or `json` file into a class and make attributes from keys. Adds attribute `require` and `require_any` which force you to set listed attributes by the end of init
 
 
 
@@ -49,24 +49,25 @@ Consists of several sub-packages:
 
         - <kbd>decorator</kbd> `require_condition`
 
-                Let's you specify a condition in which a method of a class can be called
+            Let's you specify a condition in which a method of a class can be called
 
         - <kbd>decorator</kbd> `once`
 
-                Function can only be called once or it always returns the same result as the 1st call
+            Function can only be called once or it always returns the same result as the 1st call
 
         - <kbd>decorator</kbd> `limit`
-                Limits a number of times a function can be called
+
+            Limits a number of times a function can be called
     ---
     - thread
         - <kbd>decorator</kbd> `repeat_timer`
 
-                Repeat a function every `timer` number of seconds. Returns a `Queue`-like object with results
+        Repeat a function every `timer` number of seconds. Returns a `Queue`-like object with results
     ---
     - timing
         - <kbd>decorator</kbd> `time_exec`
 
-                Messure exec time of a function
+            Messure exec time of a function
 
 
 
@@ -77,9 +78,9 @@ Consists of several sub-packages:
     - misc
         - <kbd>function</kbd> `mod_name_with_ext`
 
-                Modify a path without modifying an extention
+            Modify a path without modifying an extention
     ---
     - splicer
         - <kbd>class</kbd> `Splicer`
 
-                Let's you specify blocks in files which can be pasted into other files
+            Let's you specify blocks in files which can be pasted into other files
