@@ -13,7 +13,7 @@ class PostInitMeta(ABCMeta):
     
 
 class PostInit(metaclass=PostInitMeta):
-    """Base class with __postinit__ method"""
+    """Base class that adds a call to __postinit__ which is called after __init__"""
     @abstractmethod
     def __postinit__(self) -> None:
         pass
