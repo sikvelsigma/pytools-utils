@@ -98,9 +98,9 @@ class Splicer:
             overwrite: bool, allow overwrites of existing keys
         """
         if not isinstance(key, str):
-            raise ValueError(f"'{type(self).__name__}': 'key' must be str")
+            raise TypeError(f"'{type(self).__name__}': 'key' must be str")
         if not isinstance(key, (str, list)):
-            raise ValueError(f"'{type(self).__name__}': 'text' must be str or a list")
+            raise TypeError(f"'{type(self).__name__}': 'text' must be str or a list")
         if key in self._segments and not overwrite:
             raise RuntimeError(f"'{type(self).__name__}': key '{key}' is already present")
         

@@ -41,7 +41,7 @@ def require_condition(var: Optional[str] = None, cond: Optional[str] = None, msg
 
     for x in (var, cond, msg):
         if x is not None and not isinstance(x, str):
-            raise ValueError(f"argument '{x}' must be str")
+            raise TypeError(f"argument '{x}' must be str")
 
 
     cond_str = cond if cond is not None else ""
@@ -113,7 +113,7 @@ def limit(max_calls):
         max_calls: int, how many time a function can be called 
     """
     if not isinstance(max_calls, int):
-        raise ValueError("'max_calls' must be int")
+        raise TypeError("'max_calls' must be int")
     if max_calls < 1:
         raise ValueError("'max_calls' must be greater than 0")
 
