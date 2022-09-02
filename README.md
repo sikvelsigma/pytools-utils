@@ -58,6 +58,10 @@ Consists of several sub-packages:
         - <kbd>decorator</kbd> `limit`
 
             Limits a number of times a function can be called
+
+        - <kbd>decorator</kbd> `try_times`
+
+            A function will be called several times if they raise an error
     ---
     - thread
         - <kbd>decorator</kbd> `repeat_timer`
@@ -69,7 +73,7 @@ Consists of several sub-packages:
 
             Messure exec time of a function
 
-
+    
 
 - `filetools`
 

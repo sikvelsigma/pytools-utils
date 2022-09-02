@@ -11,6 +11,10 @@ Functions decorated with `once` either always return the result of the 1st call 
 
 Functions decorated with `limit` are allowed to be called on set amount of times
 
+- <kbd>decorator `try_times`</kbd>
+
+Functions decorated with `try_times` will be called several times if they raise an error
+
 # Contains
 
 ## require_condition
@@ -29,4 +33,10 @@ Functions decorated with `limit` are allowed to be called on set amount of times
 
 ```python
 # insert@:req_limit
+```
+
+## try_times
+
+```python
+# insert@:req_try
 ```

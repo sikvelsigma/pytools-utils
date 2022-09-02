@@ -130,5 +130,37 @@ def limit(max_calls):
 
     return decorator
 
+def try_times(times: int):
+    """Tries to call function several times if it raises an error
+    
+    Args:
+        times: int, how many times to call
+    """
+    if not isinstance(times, int):
+        raise TypeError("'times' must be int")
+    if times < 1:
+        raise ValueError("'times' must be greater than 0")
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            res = None
+            nonlocal times
+            calls = 0
+            while calls < times:
+                calls += 1
+                try:
+                    res = func(*args, **kwargs)
+                except Exception as err:
+                    if calls == times:
+                        orig_msg = str(err)
+                        raise type(err)(f"function '{func.__name__}' was called {times} times but raised exception: {orig_msg}") from None
+                else:
+                    break
+                
+            return res
+        return wrapper
+    return decorator
+
 if __name__ == "__main__":
     pass
