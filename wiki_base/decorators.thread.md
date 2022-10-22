@@ -5,7 +5,7 @@ Sets a separate thread that will call a function every set amount of seconds. Re
 
 - <kbd>decorator `cash_timer`</kbd>
 
-Calls a function in a separate thread every x seconds and stores the result
+Calls a function in a separate thread every `timer` seconds and stores the result
 # Contains
 
 ## repeat_timer
