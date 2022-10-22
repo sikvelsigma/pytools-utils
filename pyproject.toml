@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "pyuseful"
-version = "0.0.5"
+version = "0.0.6"
 authors = [
   { name="sikvelsigma", email="sikvelsigma@yandex.ru" },
 ]

@@ -67,6 +67,10 @@ Consists of several sub-packages:
         - <kbd>decorator</kbd> `repeat_timer`
 
         Repeat a function every `timer` number of seconds. Returns a `Queue`-like object with results
+
+        - <kbd>decorator</kbd> `cash_timer`
+
+        Calls a function in a separate thread every `timer` seconds and stores the result
     ---
     - timing
         - <kbd>decorator</kbd> `time_exec`
